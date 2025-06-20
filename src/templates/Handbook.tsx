@@ -207,10 +207,12 @@ export default function Handbook({
         thumbnail,
         related,
     } = frontmatter
+
     const { parent, excerpt } = post
     const lastUpdated = parent?.fields?.gitLogLatestDate
     const showToc = !hideAnchor && tableOfContents?.length > 0
     const filePath = post?.parent?.relativePath
+    const showTitle = frontmatter.showTitle
 
     const isArticle = frontmatter.isArticle !== false
 
@@ -290,7 +292,7 @@ export default function Handbook({
                             <div className="flex items-center mt-0 flex-wrap justify-between">
                                 <div className="flex items-center space-x-2 mb-1">
                                     {thumbnail && <GatsbyImage image={getImage(thumbnail)} />}
-                                    <h1 className="dark:text-white text-3xl sm:text-5xl m-0">{title}</h1>
+                                    {showTitle && <h1 className="dark:text-white text-3xl sm:text-5xl m-0">{title}</h1>}
                                 </div>
                                 <div className="flex items-center space-x-2">
                                     {github && (
@@ -388,6 +390,7 @@ export const query = graphql`
             }
             frontmatter {
                 title
+                showTitle
                 hideAnchor
                 description
                 hideLastUpdated
